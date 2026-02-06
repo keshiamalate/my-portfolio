@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Keshia Malate | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function loadRecommendations() {
+            const recList = document.getElementById("rec-list");
+            const recommendations = JSON.parse(localStorage.getItem("recommendations")) || [];
+            recList.innerHTML = "";
+
+            recommendations.forEach(rec => {
+                const p = document.createElement("p");
+                p.className = "rec";
+                p.textContent = rec;
+                recList.appendChild(p);
+            });
+        }
+
+        function saveRecommendation(event) {
+            event.preventDefault();
+
+            const textarea = document.getElementById("recommendation");
+            const text = textarea.value.trim();
+
+            if (text === "") return;
+
+            const recommendations = JSON.parse(localStorage.getItem("recommendations")) || [];
+            recommendations.push(text);
+            localStorage.setItem("recommendations", JSON.stringify(recommendations));
+
+            textarea.value = "";
+            loadRecommendations();
+            showPopup();
+        }
+
+        function showPopup() {
+            alert("Thank you for leaving a recommendation!");
+        }
+
+        document.addEventListener("DOMContentLoaded", loadRecommendations);
+    </script>
+</head>
+
+<body>
+
+<header>
+    <div class="name">Keshia Malate</div>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Project details</a>
+        <a href="#skills">Skills</a>
+        <a href="#recommend">Recommendations</a>
+    </nav>
+    <img src="images/home.png" class="home-icon" onclick="scrollToTop()" title="Home">
+</header>
+
+<!-- ABOUT ME -->
+<section id="about">
+    <h2>About Me</h2>
+    <img src="images/profile.jpg" alt="Profile Photo" class="profile-pic">
+    <p>
+        Hi, my name is Keshia Malate. I am an Information Technology student specializing in programming and system development.
+        I enjoy building user-friendly web applications and learning modern technologies that solve real-world problems.
+    </p>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <h2>Skills</h2>
+    <div class="skill"><img src="images/html.png"> HTML</div>
+    <div class="skill"><img src="images/css.png"> CSS</div>
+    <div class="skill"><img src="images/js.png"> JavaScript</div>
+    <div class="skill"><img src="images/php.png"> PHP</div>
+    <div class="skill"><img src="images/mysql.png"> MySQL</div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <h2>Projects</h2>
+    <ul>
+        <li>Online Appointment Scheduling System</li>
+        <li>Student Performance Monitoring Dashboard</li>
+        <li>Inventory Management Web Application</li>
+    </ul>
+</section>
+
+<!-- RECOMMENDATIONS -->
+<section id="recommend">
+    <h2>Recommendations</h2>
+
+    <div id="rec-list"></div>
+
+    <h3>Add a Recommendation</h3>
+    <form onsubmit="saveRecommendation(event)">
+        <textarea id="recommendation" placeholder="Write your recommendation here..." required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</section>
+
+</body>
+</html>
